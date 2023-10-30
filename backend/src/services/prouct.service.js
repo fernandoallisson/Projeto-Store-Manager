@@ -7,11 +7,13 @@ const getAll = async () => {
 };
 
 const findById = async (id) => {
-  const products = await product.findById(id);
+  const item = await product.findById(id);
 
-  if (!products) return { status: 'NOT_FOUND', message: 'Product not found' };
+  if (!product) {
+    throw new Error('Product not found');
+  }
 
-  return { status: 'SUCCESS', products };
+  return { status: 'SUCCESS', item };
 };
 
 const create = async (name) => {

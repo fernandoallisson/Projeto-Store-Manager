@@ -1,7 +1,7 @@
 const conection = require('./conection.model');
 
 const getAll = async () => {
-  const [products] = await conection.execute('SELECT * FROM products');
+  const [[products]] = await conection.execute('SELECT * FROM products');
   return products;
 };
 
