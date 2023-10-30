@@ -1,7 +1,7 @@
 const conection = require('./conection.model');
 
 const getAll = async () => {
-  const [[products]] = await conection.execute('SELECT * FROM products');
+  const [products] = await conection.execute('SELECT * FROM products');
   return products;
 };
 
@@ -23,7 +23,7 @@ const update = async (id, name) => {
     'UPDATE products SET name = ? WHERE id = ?',
     [name, id],
   );
-  const idProduct = await conection.execute('SELECT * FROM products WHERE id = ?', [id]);
+  const [idProduct] = await conection.execute('SELECT * FROM products WHERE id = ?', [id]);
   return idProduct;
 };
 

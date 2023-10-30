@@ -65,7 +65,7 @@ const existeProduto = async (req, res, next) => {
     return res.status(422).json({ message: 'Product not found' });
   }
   next();
-};
+}; // Atenção à essa função
 
 module.exports = {
   validarNomeProduto,

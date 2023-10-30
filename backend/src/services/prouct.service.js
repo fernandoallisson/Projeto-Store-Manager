@@ -1,41 +1,41 @@
-const { product } = require('../models/index');
+const { product } = require('../models');
 
 const getAll = async () => {
-  const products = await product.getAll();
+  const itens = await product.getAll();
 
-  return { status: 'SUCCESS', products };
+  return { status: 'SUCCESS', products: itens };
 };
 
 const findById = async (id) => {
   const item = await product.findById(id);
 
   if (!product) {
-    throw new Error('Product not found');
+    return { status: 'NOT_FOUND', products: { message: 'Product not found' } };
   }
 
-  return { status: 'SUCCESS', item };
+  return { status: 'SUCCESS', products: item[0] };
 };
 
 const create = async (name) => {
-  const products = await product.create(name);
+  const item = await product.create(name);
 
-  return { status: 'SUCCESS', products };
+  return { status: 'SUCCESS', products: item };
 };
 
 const update = async (id, name) => {
-  const products = await product.update(id, name);
+  const item = await product.update(id, name);
 
-  if (!products) return { status: 'NOT_FOUND', message: 'Product not found' };
+  if (!item) return { status: 'NOT_FOUND', message: 'Product not found' };
 
-  return { status: 'SUCCESS', products };
+  return { status: 'SUCCESS', products: item[0] };
 };
 
 const exclude = async (id) => {
-  const products = await product.exclude(id);
+  const item = await product.exclude(id);
 
-  if (!products) return { status: 'NOT_FOUND', message: 'Product not found' };
+  if (!item) return { status: 'NOT_FOUND', message: 'Product not found' };
 
-  return { status: 'SUCCESS', products };
+  return { status: 'SUCCESS', products: item[0] };
 };
 
 module.exports = {

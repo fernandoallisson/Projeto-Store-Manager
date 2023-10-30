@@ -6,7 +6,6 @@ const getAll = async () => {
       sales_products.sale_id,
       sales_products.product_id,
       sales_products.quantity,
-      sales.total_price,
       sales.sale_date
     FROM sales_products
     INNER JOIN sales ON sales_products.sale_id = sales.id`,
@@ -17,7 +16,7 @@ const getAll = async () => {
 const findById = async (id) => {
   const [sale] = await conection.execute(
     `SELECT
-      sales_products.sale_id,
+      sales_products.product_id,
       sales_products.quantity,
       sales.date,
     FROM sales_products
