@@ -10,22 +10,26 @@ const findById = async (id) => {
   return product;
 };
 
-const create = async (name, quantity) => {
-  await conection.execute(
-    'INSERT INTO products (name, quantity) VALUES (?, ?)',
-    [name, quantity],
+const create = async (name) => {
+  const [productCreated] = await conection.execute(
+    'INSERT INTO products (name) VALUES (?)',
+    [name],
   );
+  return { id: productCreated.id, name };
 };
 
-const update = async (id, name, quantity) => {
+const update = async (id, name) => {
   await conection.execute(
-    'UPDATE products SET name = ?, quantity = ? WHERE id = ?',
-    [name, quantity, id],
+    'UPDATE products SET name = ? WHERE id = ?',
+    [name, id],
   );
+  const idProduct = await conection.execute('SELECT * FROM products WHERE id = ?', [id]);
+  return idProduct;
 };
 
 const exclude = async (id) => {
   await conection.execute('DELETE FROM products WHERE id = ?', [id]);
+  return { message: 'Produto excluído com sucesso!' };
 };
 
 module.exports = {
