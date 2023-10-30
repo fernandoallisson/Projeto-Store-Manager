@@ -9,11 +9,11 @@ const getAll = async () => {
 const findById = async (id) => {
   const item = await product.findById(id);
 
-  if (!product) {
+  if (!item || item.length === 0) {
     return { status: 'NOT_FOUND', products: { message: 'Product not found' } };
   }
 
-  return { status: 'SUCCESS', products: item[0] };
+  return { item };
 };
 
 const create = async (name) => {
