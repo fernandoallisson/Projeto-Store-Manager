@@ -1,47 +1,34 @@
-const salesService = require('../services');
+const vendasService = require('../services/index');
 
 const getAll = async (_req, res) => {
-  const sales = await salesService.vendasService;
+  const { sales } = await vendasService.getAll();
 
   res.status(200).json(sales);
 };
 
-const getById = async (req, res) => {
+const findById = async (req, res) => {
   const { id } = req.params;
-  const { status, data } = await salesService.getById(id);
 
-  res.status(status).json(data);
+  const sales = await vendasService.findById(id);
+
+  if (sales.status === 'NOT_FOUND') {
+    return res.status(404).json(sales.sales);
+  }
+
+  res.status(200).json(sales);
 };
 
 const create = async (req, res) => {
-  const itensSold = req.body;
+  const { body } = req;
 
-  const { status, data } = await salesService.create(itensSold);
+  const sales = await vendasService.create(body);
 
-  res.status(status).json(data);
-};
-
-const update = async (req, res) => {
-  const { id } = req.params;
-  const itensSold = req.body;
-
-  const { status, data } = await salesService.update(id, itensSold);
-
-  res.status(status).json(data);
-};
-
-const exclude = async (req, res) => {
-  const { id } = req.params;
-
-  const { status, data } = await salesService.exclude(id);
-
-  res.status(status).json(data);
+  res.status(201).json(sales.sales);
 };
 
 module.exports = {
   getAll,
-  getById,
+  findById,
   create,
-  update,
-  exclude,
 };
+// Adicionar o update e o delete ainda

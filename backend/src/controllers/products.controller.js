@@ -12,7 +12,7 @@ const findById = async (req, res) => {
   const products = await produtosService.findById(id);
 
   if (products.status === 'NOT_FOUND') {
-    return res.status(404).json(products.item);
+    return res.status(404).json(products.products);
   }
 
   res.status(200).json(products);
