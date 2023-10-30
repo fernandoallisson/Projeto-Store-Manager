@@ -10,6 +10,10 @@ const getById = async (req, res) => {
   const { id } = req.params;
   const { status, data } = await salesService.getById(id);
 
+  res.status(status).json(data);
+};
+
 module.exports = {
   getAll,
+  getById,
 };
