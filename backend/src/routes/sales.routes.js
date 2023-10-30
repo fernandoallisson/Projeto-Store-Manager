@@ -10,7 +10,7 @@ const {
 const rotaVendas = Router();
 
 rotaVendas.get('/sales', controleDeVendas.getAll);
-rotaVendas.get('/sales/:id', controleDeVendas.getById);
+rotaVendas.get('/sales/:id', controleDeVendas.findById);
 rotaVendas.post(
   '/sales',
   validarQuantidadeVendas,
@@ -20,6 +20,6 @@ rotaVendas.post(
   controleDeVendas.create,
 );
 rotaVendas.put('/sales/:id', controleDeVendas.update);
-rotaVendas.delete('/sales/:id', controleDeVendas.exclude);
+rotaVendas.delete('/sales/:id', controleDeVendas.remove);
 
 module.exports = rotaVendas;

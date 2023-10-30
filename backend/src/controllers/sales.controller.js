@@ -26,9 +26,28 @@ const create = async (req, res) => {
   res.status(201).json(sales.sales);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+
+  const sales = await vendasService.update(id, body);
+
+  res.status(200).json(sales);
+};
+
+const remove = async (req, res) => {
+  const { id } = req.params;
+
+  const sales = await vendasService.delete(id);
+
+  res.status(200).json(sales);
+};
+
 module.exports = {
   getAll,
   findById,
   create,
+  update,
+  remove,
 };
 // Adicionar o update e o delete ainda
