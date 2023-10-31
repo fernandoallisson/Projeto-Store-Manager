@@ -37,4 +37,30 @@ describe('Testa o controller de produtos', function () {
     chai.expect(res.status).to.have.been.calledWith(200);
     chai.expect(res.json).to.have.been.calledWith({});
   });
+  it('Testa os produtos', async function () {
+    const req = { body: { name: 'teste' } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    sinon.stub(productsService.produtosService, 'create').resolves({ item: {} });
+
+    await productsController.controleDeProdutos.create(req, res);
+
+    chai.expect(res.status).to.have.been.calledWith(201);
+    chai.expect(res.json).to.have.been.calledWith({});
+  });
+  it('Testa os produtos 1', async function () {
+    const req = { body: { name: 'teste' } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    sinon.stub(productsService.produtosService, 'create').resolves({ item: {} });
+
+    await productsController.controleDeProdutos.create(req, res);
+
+    chai.expect(res.status).to.have.been.calledWith(201);
+    chai.expect(res.json).to.have.been.calledWith({});
+  });
 });
