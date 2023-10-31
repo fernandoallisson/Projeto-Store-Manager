@@ -10,7 +10,6 @@ const findById = async (req, res) => {
   const { id } = req.params;
 
   const products = await produtosService.findById(id);
-  console.log(products);
   if (products.status === 'NOT_FOUND') {
     return res.status(404).json(products.products);
   }
