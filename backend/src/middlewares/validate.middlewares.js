@@ -59,7 +59,7 @@ const existeProduto = async (req, res, next) => {
   const array = [];
   const promessa = req.body.map(async (elemento) => {
     const produto = await product.findById(elemento.productId);
-    array.push(produto[0]);
+    array.push(produto);
   });
   await Promise.all(promessa);
 

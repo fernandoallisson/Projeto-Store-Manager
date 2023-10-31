@@ -16,7 +16,6 @@ const findById = async (id) => { // TESTADA
 
 const create = async (products) => {
   const { id, obj } = await sales.create(products);
-  console.log(id, obj);
   return { data: { id, itensSold: obj } };
 };
 

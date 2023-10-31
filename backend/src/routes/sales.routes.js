@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { controleDeVendas } = require('../controllers');
 const { 
   validarVendaPeloId,
-  // existeProduto,
+  existeProduto,
   validarQuantidadeVendas,
   validarTamanhoVendas, 
 } = require('../middlewares/validate.middlewares');
@@ -14,7 +14,7 @@ rotaVendas.get('/sales/:id', controleDeVendas.findById);
 rotaVendas.post(
   '/sales',
   validarQuantidadeVendas,
-  // existeProduto,
+  existeProduto,
   validarVendaPeloId,
   validarTamanhoVendas,
   controleDeVendas.create,
