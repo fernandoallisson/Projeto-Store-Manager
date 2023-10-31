@@ -16,10 +16,10 @@ const findById = async (id) => {
   return { item };
 };
 
-const create = async (name) => {
+const create = async (name) => { // TESTADA
   const item = await product.create(name);
 
-  return { status: 'SUCCESS', products: item };
+  return { item };
 };
 
 const update = async (id, name) => {

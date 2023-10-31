@@ -1,4 +1,4 @@
-const connection = require('../models/index');
+const product = require('../models/product.model');
 
 const validarNomeProduto = async (req, res, next) => {
   const { name } = req.body;
@@ -46,9 +46,7 @@ const validarQuantidadeVendas = async (req, res, next) => {
 };
 
 const validarTamanhoVendas = async (req, res, next) => {
-  const vendas = req.body;
-
-  vendas.forEach((element) => {
+  req.body.forEach((element) => {
     if (element.quantity <= 0) {
       return res.status(422).json({ message: '"quantity" must be larger than or equal to 1' });
     }
@@ -58,11 +56,17 @@ const validarTamanhoVendas = async (req, res, next) => {
 };
 
 const existeProduto = async (req, res, next) => {
-  const { productId } = req.body;
-  const [product] = await connection.execute('SELECT * FROM products WHERE id = ?', [productId]);
+  const array = [];
+  const promessa = req.body.map(async (elemento) => {
+    const produto = await product.findById(elemento.productId);
+    array.push(produto[0]);
+  });
+  await Promise.all(promessa);
 
-  if (product.length === 0) {
-    return res.status(422).json({ message: 'Product not found' });
+  for (let i = 0; i < array.length; i += 1) {
+    if (!array[i]) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
   }
   next();
 }; // Atenção à essa função

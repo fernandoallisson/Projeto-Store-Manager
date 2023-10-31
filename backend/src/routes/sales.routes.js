@@ -2,9 +2,9 @@ const { Router } = require('express');
 const { controleDeVendas } = require('../controllers');
 const { 
   validarVendaPeloId,
-  existeProduto,
-  validarNomeProduto,
+  // existeProduto,
   validarQuantidadeVendas,
+  validarTamanhoVendas, 
 } = require('../middlewares/validate.middlewares');
 
 const rotaVendas = Router();
@@ -14,12 +14,11 @@ rotaVendas.get('/sales/:id', controleDeVendas.findById);
 rotaVendas.post(
   '/sales',
   validarQuantidadeVendas,
-  existeProduto,
-  validarNomeProduto,
+  // existeProduto,
   validarVendaPeloId,
+  validarTamanhoVendas,
   controleDeVendas.create,
 );
-rotaVendas.put('/sales/:id', controleDeVendas.update);
-rotaVendas.delete('/sales/:id', controleDeVendas.remove);
+rotaVendas.put('/sales/:id', controleDeVendas.create);
 
 module.exports = rotaVendas;

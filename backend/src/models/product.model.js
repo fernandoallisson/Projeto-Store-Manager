@@ -1,21 +1,21 @@
 const conection = require('./conection.model');
 
-const getAll = async () => {
+const getAll = async () => { // TESTADA
   const [products] = await conection.execute('SELECT * FROM products');
   return products;
 };
 
-const findById = async (id) => {
+const findById = async (id) => { // TESTADA
   const [[product]] = await conection.execute('SELECT * FROM products WHERE id = ?', [id]);
   return product;
 };
 
-const create = async (name) => {
+const create = async (name) => { // TESTADA
   const [productCreated] = await conection.execute(
     'INSERT INTO products (name) VALUES (?)',
     [name],
   );
-  return { id: productCreated.id, name };
+  return { id: productCreated.insertId, name };
 };
 
 const update = async (id, name) => {

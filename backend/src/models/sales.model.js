@@ -1,46 +1,38 @@
 const conection = require('./conection.model');
 
-const getAll = async () => {
+const getAll = async () => { // TESTADA
   const [sales] = await conection.execute(
-    `SELECT
-      sales_products.sale_id,
-      sales_products.product_id,
-      sales_products.quantity,
-      sales.sale_date
-    FROM sales_products
-    INNER JOIN sales ON sales_products.sale_id = sales.id`,
+    `SELECT 
+        sales_products.sale_id AS saleId,
+        sales_products.product_id AS productId,
+        sales_products.quantity AS quantity,
+        sales.date AS date
+    FROM sales_products 
+    JOIN sales ON sales_products.sale_id = sales.id;`,
   );
   return sales;
 };
 
-const findById = async (id) => {
-  const [sale] = await conection.execute(
-    `SELECT
-      sales_products.product_id,
-      sales_products.quantity,
-      sales.date,
-    FROM sales_products
-    INNER JOIN sales ON sales_products.sale_id = sales.id
-    WHERE sale_id = ?`,
-    [id],
-  );
+const findById = async (id) => { // TESTADA
+  const [sale] = await conection.execute(`SELECT sales_products.product_id AS productId, 
+  sales_products.quantity, sales.date
+  FROM sales_products 
+  JOIN sales ON sales_products.sale_id = sales.id
+  WHERE sales.id = ?`, [id]);
   return sale;
 };
 
-const create = async (products) => {
+const create = async (products) => { // TESTADA
   const [sale] = await conection.execute(
     'INSERT INTO sales (date) VALUES (NOW())',
   );
-
   const { insertId: id } = sale;
 
-  const promises = products.map((product) => conection.execute(
+  const promessa = products.map((product) => conection.execute(
     'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
-    [product.insertId, id, product.quantity],
+    [id, product.productId, product.quantity],
   ));
-
-  await Promise.all(promises);
-
+  await Promise.all(promessa);
   return { id: sale.insertId, obj: products };
 };
 
