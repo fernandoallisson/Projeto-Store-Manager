@@ -43,4 +43,19 @@ describe('Testa o model de produtos', function () {
     const expected = mockProduct[0];
     chai.expect(result).to.been.equal(expected);
   });
+  it('Deve retornar uma lista de produtos ao chamar getAll', async function () {
+    // Configuração do ambiente de teste
+    const expectedProducts = [{ id: 1, name: 'Produto 1' }, { id: 2, name: 'Produto 2' }];
+    const connectionStub = sinon.stub(connection, 'execute').resolves([expectedProducts]);
+
+    // Chame a função getAll
+    const result = await product.getAll();
+
+    // Valide as expectativas
+    chai.expect(result).to.deep.equal(expectedProducts);
+    chai.expect(connectionStub).to.have.been.calledWith('SELECT * FROM products');
+
+    // Restaure o stub
+    connectionStub.restore();
+  });
 });

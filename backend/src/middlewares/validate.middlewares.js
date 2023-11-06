@@ -54,7 +54,6 @@ const validarTamanhoVendas = async (req, res, next) => {
 
   next();
 };
-
 const existeProduto = async (req, res, next) => {
   const array = [];
   const promessa = req.body.map(async (elemento) => {

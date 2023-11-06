@@ -1,6 +1,6 @@
 const { vendasService } = require('../services/index');
 
-const getAll = async (_req, res) => { // TESTADA
+const getAll = async (_req, res) => { // TESTADA, Mas falta teste unit.
   const { data } = await vendasService.getAll();
   console.log(data);
   res.status(200).json(data);
