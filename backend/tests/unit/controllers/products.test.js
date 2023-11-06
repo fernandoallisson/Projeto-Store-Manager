@@ -7,11 +7,11 @@ const productsService = require('../../../src/services/index');
 
 chai.use(sinonChai);
 
-describe('Testa o controller de produtos', function () {
+describe('Testa o controller de produtos', function () { // Concluído
   afterEach(function () {
     sinon.restore();
   });
-  it('Testa /products', async function () {
+  it('Testa /products', async function () { // Testa o controller de produtos
     sinon.stub(productsService.produtosService, 'getAll').resolves({ products: [] });
     const req = {};
     const res = {
@@ -24,7 +24,7 @@ describe('Testa o controller de produtos', function () {
     chai.expect(res.status).to.have.been.calledWith(200);
     chai.expect(res.json).to.have.been.calledWith([]);
   });
-  it('Testa /products/:id', async function () {
+  it('Testa /products/:id', async function () { // Testa o controller de produtos
     const req = { params: { id: 1 } };
     const res = {
       status: sinon.stub().returnsThis(),
@@ -37,7 +37,7 @@ describe('Testa o controller de produtos', function () {
     chai.expect(res.status).to.have.been.calledWith(200);
     chai.expect(res.json).to.have.been.calledWith({});
   });
-  it('Testa os produtos', async function () {
+  it('Testa os produtos', async function () { // Testa o controller de produtos
     const req = { body: { name: 'teste' } };
     const res = {
       status: sinon.stub().returnsThis(),
@@ -50,7 +50,7 @@ describe('Testa o controller de produtos', function () {
     chai.expect(res.status).to.have.been.calledWith(201);
     chai.expect(res.json).to.have.been.calledWith({});
   });
-  it('Testa os produtos 1', async function () {
+  it('Testa os produtos 1', async function () { // Testa o controller de produtos
     const req = { body: { name: 'teste' } };
     const res = {
       status: sinon.stub().returnsThis(),
