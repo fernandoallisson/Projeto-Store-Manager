@@ -20,7 +20,7 @@ const findById = async (req, res) => { // TESTADA
 const create = async (req, res) => {
   const { data, status } = await vendasService.create(req.body);
   if (status === 'NOT_FOUND') {
-    return res.status(404).json(data);
+    return res.status(404).json(data.itemSold);
   }
 
   res.status(201).json({ id: data.id, itemsSold: data.itemSold });

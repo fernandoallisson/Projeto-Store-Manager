@@ -13,9 +13,9 @@ rotaVendas.get('/sales', controleDeVendas.getAll);
 rotaVendas.get('/sales/:id', controleDeVendas.findById);
 rotaVendas.post(
   '/sales',
+  validarVendaPeloId,
   validarQuantidadeVendas,
   existeProduto,
-  validarVendaPeloId,
   validarTamanhoVendas,
   controleDeVendas.create,
 );

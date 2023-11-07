@@ -11,11 +11,11 @@ const validarNomeProduto = async (req, res, next) => {
   next();
 };
 
-const validarVendaPeloId = async (req, res, next) => {
+const validarVendaPeloId = async (req, res, next) => { // TESTADA
   let erro = false;
   const vendas = req.body;
 
-  vendas.forEach((element) => {
+  await vendas.forEach((element) => {
     if (!element.productId || element.productId === '') {
       erro = true;
     }
@@ -28,11 +28,11 @@ const validarVendaPeloId = async (req, res, next) => {
   next();
 };
 
-const validarQuantidadeVendas = async (req, res, next) => {
+const validarQuantidadeVendas = async (req, res, next) => { // TESTADA
   let erro = false;
   const vendas = req.body;
 
-  vendas.forEach((element) => {
+  await vendas.forEach((element) => {
     if (!element.quantity && element.quantity !== 0) {
       erro = true;
     }
@@ -46,14 +46,21 @@ const validarQuantidadeVendas = async (req, res, next) => {
 };
 
 const validarTamanhoVendas = async (req, res, next) => {
-  req.body.forEach((element) => {
-    if (element.quantity <= 0) {
-      return res.status(422).json({ message: '"quantity" must be larger than or equal to 1' });
+  let erro = false;
+  const vendas = req.body;
+  await vendas.forEach((element) => {
+    if (element.quantity < 1) {
+      erro = true;
     }
   });
 
+  if (erro) {
+    return res.status(422).json({ message: '"quantity" must be greater than or equal to 1' });
+  }
+
   next();
 };
+
 const existeProduto = async (req, res, next) => {
   const array = [];
   const promessa = req.body.map(async (elemento) => {
@@ -68,7 +75,7 @@ const existeProduto = async (req, res, next) => {
     }
   }
   next();
-}; // Atenção à essa função
+};
 
 module.exports = {
   validarNomeProduto,

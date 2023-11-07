@@ -37,4 +37,26 @@ describe('Testa o controller de sales', function () {
     chai.expect(res.status).to.have.been.calledWith(200);
     chai.expect(res.json).to.have.been.calledWith({});
   });
+  it('testa /sales no modo post', async function () {
+    const mock = {
+      id: 1,
+      itensSold: [
+        {
+          productId: 1,
+          quantity: 10,
+        },
+      ],
+    };
+    const req = { body: [{ productId: 1, quantity: 1 }] };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    sinon.stub(vendasService, 'create').resolves({ data: mock, status: 'CREATED' });
+
+    await controleDeVendas.create(req, res);
+
+    chai.expect(res.status).to.have.been.calledWith(201);
+    chai.expect(res.json).to.have.been.calledWith({ id: mock.id, itemsSold: mock.itemSold });
+  });
 });
