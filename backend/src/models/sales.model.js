@@ -33,7 +33,7 @@ const create = async (products) => { // TESTADA
     [id, product.productId, product.quantity],
   ));
   await Promise.all(promessa);
-  return { id: sale.insertId, obj: products };
+  return { id: sale.insertId, itemSold: products };
 };
 
 const exclude = async (id) => {
