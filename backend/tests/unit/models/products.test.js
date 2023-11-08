@@ -58,4 +58,33 @@ describe('Testa o model de produtos', function () {
     // Restaure o stub
     connectionStub.restore();
   });
+  it('Deve retornar um produto ao chamar findById', async function () {
+    // Configuração do ambiente de teste
+    const expectedProduct = { id: 1, name: 'Produto 1' };
+    const connectionStub = sinon.stub(connection, 'execute').resolves([[expectedProduct]]);
+
+    // Chame a função findById
+    const result = await product.findById(1);
+
+    // Valide as expectativas
+    chai.expect(result).to.deep.equal(expectedProduct);
+    sinon.assert.calledWith(connectionStub, 'SELECT * FROM products WHERE id = ?', [1]);
+    // Restaure o stub
+    connectionStub.restore();
+  });
+  it('Deve retornar um produto ao chamar create', async function () {
+    // Configuração do ambiente de teste
+    const mock = { id: 1, name: 'Produto 1' };
+    const connectionStub = sinon.stub(connection, 'execute').resolves([{ insertId: 1, name: 'Produto 1' }]);
+
+    // Chame a função create
+    const result = await product.create('Produto 1');
+
+    // Valide as expectativas
+    chai.expect(result).to.deep.equal(mock);
+    chai.expect(connectionStub).to.have.been.calledWith('INSERT INTO products (name) VALUES (?)', ['Produto 1']);
+
+    // Restaure o stub
+    connectionStub.restore();
+  });
 });

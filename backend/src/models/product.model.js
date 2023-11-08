@@ -28,8 +28,17 @@ const update = async (id, name) => {
 };
 
 const exclude = async (id) => {
-  await conection.execute('DELETE FROM products WHERE id = ?', [id]);
+  const [result] = await conection.execute('DELETE FROM products WHERE id = ?', [id]);
+  
+  if (result.affectedRows === 0) {
+    return null; // Retorna null se nenhum produto foi excluído (não encontrado)
+  }
+  
   return { message: 'Produto excluído com sucesso!' };
+};
+
+module.exports = {
+  exclude,
 };
 
 module.exports = {

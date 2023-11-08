@@ -59,4 +59,17 @@ describe('Testa o controller de sales', function () {
     chai.expect(res.status).to.have.been.calledWith(201);
     chai.expect(res.json).to.have.been.calledWith({ id: mock.id, itemsSold: mock.itemSold });
   });
+  it('testa /sales no modo get buscando por um id inexistente', async function () {
+    const req = { params: { id: 9999 } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    sinon.stub(vendasService, 'findById').resolves({ status: 'NOT_FOUND', data: { message: 'Sale not found' } });
+
+    await controleDeVendas.findById(req, res);
+
+    chai.expect(res.status).to.have.been.calledWith(404);
+    chai.expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+  });
 });

@@ -29,31 +29,36 @@ const update = async (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
 
-  const products = await produtosService.update(id, name);
+  const product = await produtosService.update(id, name);
 
-  if (products.status === 'NOT_FOUND') {
-    return res.status(404).json(products.products);
+  if (product.status === 'NOT_FOUND') {
+    return res.status(404).json({ message: product.message });
   }
 
-  res.status(200).json(products.products);
+  res.status(200).json(product.product);
 };
 
-// const exclude = async (req, res) => {
-//   const { id } = req.params;
+const exclude = async (req, res) => {
+  const { id } = req.params;
 
-//   const products = await produtosService.exclude(id);
+  const products = await produtosService.exclude(id);
 
-//   if (products.status === 'NOT_FOUND') {
-//     return res.status(404).json(products.products);
-//   }
+  if (products.status === 'NOT_FOUND') {
+    return res.status(404).json({ message: products.message });
+  }
 
-//   res.status(200).json(products.products);
-// };
+  // Produto excluído com sucesso, retorna status 204 (No Content)
+  res.status(204).end();
+};
+
+module.exports = {
+  exclude,
+};
 
 module.exports = {
   getAll,
   findById,
   create,
   update,
-  // exclude,
+  exclude,
 };

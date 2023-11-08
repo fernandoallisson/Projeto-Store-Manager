@@ -25,17 +25,23 @@ const create = async (name) => { // TESTADA
 const update = async (id, name) => {
   const item = await product.update(id, name);
 
-  if (!item) return { status: 'NOT_FOUND', message: 'Product not found' };
+  if (!item || item.length === 0) return { status: 'NOT_FOUND', message: 'Product not found' };
 
-  return { status: 'SUCCESS', products: item[0] };
+  return { status: 'SUCCESS', product: item[0] };
 };
 
 const exclude = async (id) => {
   const item = await product.exclude(id);
 
-  if (!item) return { status: 'NOT_FOUND', message: 'Product not found' };
+  if (!item) {
+    return { status: 'NOT_FOUND', message: 'Product not found' };
+  }
 
-  return { status: 'SUCCESS', products: item[0] };
+  return { status: 'SUCCESS', products: item };
+};
+
+module.exports = {
+  exclude,
 };
 
 module.exports = {

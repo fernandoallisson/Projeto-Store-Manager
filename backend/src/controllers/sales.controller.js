@@ -30,7 +30,7 @@ const create = async (req, res) => {
 //   const { id } = req.params;
 //   const { body } = req;
 
-//   const sales = await vendasService.vendasService.update(id, body);
+//   const sales = await vendasService.update(id, body);
 
 //   res.status(200).json(sales);
 // };
