@@ -56,4 +56,11 @@ describe('Testa o service de produtos', function () {
   
     chai.expect(response).to.be.deep.equal({ item: mockProduct[0] });
   });
+  it('Testa função exclude', async function () {
+    sinon.stub(product, 'exclude').resolves(mockProduct[0]);
+  
+    const response = await produtosService.exclude(1);
+  
+    chai.expect(response).to.be.deep.equal({ status: 'SUCCESS', products: mockProduct[0] });
+  });
 });

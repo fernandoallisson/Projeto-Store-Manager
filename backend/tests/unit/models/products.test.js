@@ -87,4 +87,18 @@ describe('Testa o model de produtos', function () {
     // Restaure o stub
     connectionStub.restore();
   });
+  it('Testa a função exclude', async function () {
+    const id = 1;
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+    const result = await product.exclude(id);
+    const expected = { message: 'Produto excluído com sucesso!' };
+    chai.expect(result.message).to.been.equal(expected.message);
+  });
+  it('Testa a função exclude com affetedRows === 0', async function () {
+    const id = 1;
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 0 }]);
+    const result = await product.exclude(id);
+    const expected = null;
+    chai.expect(result).to.been.equal(expected);
+  });
 });
