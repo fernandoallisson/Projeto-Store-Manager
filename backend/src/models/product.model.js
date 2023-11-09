@@ -37,14 +37,16 @@ const exclude = async (id) => {
   return { message: 'Produto excluído com sucesso!' };
 };
 
-module.exports = {
-  exclude,
+const searchProductsByName = async (name) => {
+  const [products] = await conection
+    .execute('SELECT * FROM products WHERE name LIKE ?', [`%${name}%`]);
+  return products;
 };
-
 module.exports = {
   getAll,
   findById,
   create,
   update,
   exclude,
+  searchProductsByName,
 };

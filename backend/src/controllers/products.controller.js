@@ -28,7 +28,6 @@ const create = async (req, res) => { // TESTADA
 const update = async (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
-
   const product = await produtosService.update(id, name);
 
   if (product.status === 'NOT_FOUND') {
@@ -51,8 +50,21 @@ const exclude = async (req, res) => {
   res.status(204).end();
 };
 
-module.exports = {
-  exclude,
+const searchProductsByName = async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    const { products } = await produtosService.getAll();
+    return res.status(200).json(products);
+  }
+
+  const { itens } = await produtosService.searchProductsByName(q);
+
+  if (itens.length === 0) {
+    return res.status(200).json([]);
+  }
+
+  return res.status(200).json(itens);
 };
 
 module.exports = {
@@ -61,4 +73,5 @@ module.exports = {
   create,
   update,
   exclude,
+  searchProductsByName,
 };

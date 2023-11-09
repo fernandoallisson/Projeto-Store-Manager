@@ -40,8 +40,10 @@ const exclude = async (id) => {
   return { status: 'SUCCESS', products: item };
 };
 
-module.exports = {
-  exclude,
+const searchProductsByName = async (name) => {
+  const itens = await product.searchProductsByName(name);
+
+  return { itens };
 };
 
 module.exports = {
@@ -50,4 +52,5 @@ module.exports = {
   create,
   update,
   exclude,
+  searchProductsByName,
 };

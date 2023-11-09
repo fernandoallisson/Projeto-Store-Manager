@@ -13,7 +13,7 @@ const validarCampoQuantidade = async (req, res, next) => { // TESTADA
 // Será validado que não é possível realizar alterações em uma venda com o campo quantity menor ou igual a 0 (Zero)
 const validarTamanhoCampoQuantidade = async (req, res, next) => {
   const { quantity } = req.body;
-  if (quantity <= 0) {
+  if (quantity < 1) {
     return res.status(422).json({ message: '"quantity" must be greater than or equal to 1' });
   }
   next();
@@ -22,7 +22,7 @@ const validarTamanhoCampoQuantidade = async (req, res, next) => {
 // Será validado que não é possível realizar alterações em uma venda com productId inexistente;
 const validarCampoProductId = async (req, res, next) => { // TESTADA
   const { productId } = req.params;
-  const product = await products.findById(productId);
+  const product = await products.findById(Number(productId));
   if (!product || product.length === 0) {
     return res.status(404).json({ message: 'Product not found in sale' });
   }
@@ -31,8 +31,8 @@ const validarCampoProductId = async (req, res, next) => { // TESTADA
 
 // Será validado que não é possível alterar uma venda que não existe;
 const validarVendasPeloId = async (req, res, next) => { // TESTADA
-  const { id } = req.params;
-  const sale = await sales.findById(id);
+  const { saleId } = req.params;
+  const sale = await sales.findById(Number(saleId));
   if (!sale || sale.length === 0) {
     return res.status(404).json({ message: 'Sale not found' });
   }

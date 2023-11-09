@@ -9,4 +9,5 @@ rotaProdutos.get('/products/:id', controleDeProdutos.findById);
 rotaProdutos.post('/products', validarNomeProduto, controleDeProdutos.create);
 rotaProdutos.put('/products/:id', validarNomeProduto, controleDeProdutos.update);
 rotaProdutos.delete('/products/:id', controleDeProdutos.exclude);
+rotaProdutos.get('/products/search', controleDeProdutos.searchProductsByName);
 module.exports = rotaProdutos;

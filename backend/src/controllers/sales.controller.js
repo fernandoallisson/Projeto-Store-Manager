@@ -2,7 +2,6 @@ const { vendasService } = require('../services/index');
 
 const getAll = async (_req, res) => { // TESTADA, Mas falta teste unit.
   const { data } = await vendasService.getAll();
-  console.log(data);
   res.status(200).json(data);
 };
 
@@ -36,18 +35,18 @@ const exclude = async (req, res) => {
   res.status(204).end();
 };
 
-// const update = async (req, res) => {
-//   const { saleId, productId } = req.params;
-//   const { quantity } = req.body;
-//   const { data, status } = await vendasService.update(saleId, productId, quantity);
+const update = async (req, res) => {
+  const { saleId, productId } = req.params;
+  const { quantity } = req.body;
+  const { dados, status } = await vendasService.update(saleId, productId, quantity);
 
-//   res.status(status).json(data);
-// };
+  res.status(status).json(dados);
+};
 
 module.exports = {
   getAll,
   findById,
   create,
   exclude,
-  // update,
+  update,
 };
