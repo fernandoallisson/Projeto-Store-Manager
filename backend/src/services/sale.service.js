@@ -29,19 +29,19 @@ const exclude = async (id) => {
   return { status: 'SUCCESS', sales: item };
 };
 
-const update = async (saleId, productId, quantity) => {
-  await sales.update(saleId, productId, quantity);
+// const update = async (saleId, productId, quantity) => {
+//   await sales.update(saleId, productId, quantity);
 
-  const updatedSale = await sales.findById(saleId);
-  const updatedProduct = updatedSale.find((product) => product.productId === productId);
+//   const updatedSale = await sales.findById(saleId);
+//   const updatedProduct = updatedSale.find((product) => product.productId === productId);
 
-  return { status: 200, data: updatedProduct };
-};
+//   return { status: 200, data: updatedProduct };
+// };
 
 module.exports = {
   getAll,
   findById,
   create,
   exclude,
-  update,
+  // update,
 };

@@ -46,19 +46,19 @@ const exclude = async (id) => {
   return { message: 'Venda excluída com sucesso!' };
 };
 
-const update = async (saleId, productId, quantity) => {
-  await conection.execute(
-    'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
-    [quantity, saleId, productId],
-  );
+// const update = async (saleId, productId, quantity) => {
+//   await conection.execute(
+//     'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
+//     [quantity, saleId, productId],
+//   );
   
-  return { message: 'Venda atualizada com sucesso!' };
-};
+//   return { message: 'Venda atualizada com sucesso!' };
+// };
 
 module.exports = {
   getAll,
   findById,
   create,
   exclude,
-  update,
+  // update,
 };

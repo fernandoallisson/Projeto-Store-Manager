@@ -6,12 +6,12 @@ const {
   validarQuantidadeVendas,
   validarTamanhoVendas, 
 } = require('../middlewares/validate.middlewares');
-const {
-  validarCampoProductId,
-  validarCampoQuantidade,
-  validarTamanhoCampoQuantidade,
-  validarVendasPeloId,
-} = require('../middlewares/validateSales.middlewares');
+// const {
+//   validarCampoProductId,
+//   validarCampoQuantidade,
+//   validarTamanhoCampoQuantidade,
+//   validarVendasPeloId,
+// } = require('../middlewares/validateSales.middlewares');
 
 const rotaVendas = Router();
 
@@ -29,13 +29,13 @@ rotaVendas.delete(
   '/sales/:id',
   controleDeVendas.exclude,
 );
-rotaVendas.put(
-  '/sales/:saleId/products/:productId/quantity',
-  validarCampoQuantidade,
-  validarTamanhoCampoQuantidade,
-  validarCampoProductId,
-  validarVendasPeloId,
-  controleDeVendas.update,
-);
+// rotaVendas.put(
+//   '/sales/:saleId/products/:productId/quantity',
+//   validarCampoQuantidade,
+//   validarTamanhoCampoQuantidade,
+//   validarCampoProductId,
+//   validarVendasPeloId,
+//   controleDeVendas.update,
+// );
 
 module.exports = rotaVendas;

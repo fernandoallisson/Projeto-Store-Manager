@@ -36,18 +36,18 @@ const exclude = async (req, res) => {
   res.status(204).end();
 };
 
-const update = async (req, res) => {
-  const { saleId, productId } = req.params;
-  const { quantity } = req.body;
-  const { data, status } = await vendasService.update(saleId, productId, quantity);
+// const update = async (req, res) => {
+//   const { saleId, productId } = req.params;
+//   const { quantity } = req.body;
+//   const { data, status } = await vendasService.update(saleId, productId, quantity);
 
-  res.status(status).json(data);
-};
+//   res.status(status).json(data);
+// };
 
 module.exports = {
   getAll,
   findById,
   create,
   exclude,
-  update,
+  // update,
 };
