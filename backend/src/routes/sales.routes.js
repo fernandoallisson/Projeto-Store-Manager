@@ -6,6 +6,12 @@ const {
   validarQuantidadeVendas,
   validarTamanhoVendas, 
 } = require('../middlewares/validate.middlewares');
+const {
+  validarCampoProductId,
+  validarCampoQuantidade,
+  validarTamanhoCampoQuantidade,
+  validarVendasPeloId,
+} = require('../middlewares/validateSales.middlewares');
 
 const rotaVendas = Router();
 
@@ -19,6 +25,17 @@ rotaVendas.post(
   validarTamanhoVendas,
   controleDeVendas.create,
 );
-rotaVendas.put('/sales/:id', controleDeVendas.create);
+rotaVendas.delete(
+  '/sales/:id',
+  controleDeVendas.exclude,
+);
+rotaVendas.put(
+  '/sales/:saleId/products/:productId/quantity',
+  validarCampoQuantidade,
+  validarTamanhoCampoQuantidade,
+  validarCampoProductId,
+  validarVendasPeloId,
+  controleDeVendas.update,
+);
 
 module.exports = rotaVendas;

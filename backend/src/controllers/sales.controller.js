@@ -26,28 +26,28 @@ const create = async (req, res) => {
   res.status(201).json({ id: data.id, itemsSold: data.itemSold });
 };
 
-// const update = async (req, res) => {
-//   const { id } = req.params;
-//   const { body } = req;
+const exclude = async (req, res) => {
+  const { id } = req.params;
+  const sales = await vendasService.exclude(id);
+  if (sales.status === 'NOT_FOUND') {
+    return res.status(404).json({ message: sales.message });
+  }
 
-//   const sales = await vendasService.update(id, body);
+  res.status(204).end();
+};
 
-//   res.status(200).json(sales);
-// };
+const update = async (req, res) => {
+  const { saleId, productId } = req.params;
+  const { quantity } = req.body;
+  const { data, status } = await vendasService.update(saleId, productId, quantity);
 
-// const remove = async (req, res) => {
-//   const { id } = req.params;
-
-//   const sales = await vendasService.vendasService.delete(id);
-
-//   res.status(200).json(sales);
-// };
+  res.status(status).json(data);
+};
 
 module.exports = {
   getAll,
   findById,
   create,
-  // update,
-  // remove,
+  exclude,
+  update,
 };
-// Adicionar o update e o delete ainda

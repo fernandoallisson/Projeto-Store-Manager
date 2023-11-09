@@ -19,26 +19,29 @@ const create = async (products) => {
   return { status: { message: 'CREATED' }, data: { itemSold, id } };
 };
 
-// const update = async (id, products) => {
-//   const sale = await sales.update(id, products);
+const exclude = async (id) => {
+  const item = await sales.exclude(id);
 
-//   if (!sale) return { status: 'NOT_FOUND', data: { message: 'Sale not found' } };
+  if (!item) {
+    return { status: 'NOT_FOUND', message: 'Sale not found' };
+  }
 
-//   return { status: 'SUCCESS', data: sale };
-// };
+  return { status: 'SUCCESS', sales: item };
+};
 
-// const exclude = async (id) => {
-//   const sale = await sales.exclude(id);
+const update = async (saleId, productId, quantity) => {
+  await sales.update(saleId, productId, quantity);
 
-//   if (!sale) return { status: 'NOT_FOUND', data: { message: 'Sale not found' } };
+  const updatedSale = await sales.findById(saleId);
+  const updatedProduct = updatedSale.find((product) => product.productId === productId);
 
-//   return { status: 'SUCCESS', data: sale };
-// };
+  return { status: 200, data: updatedProduct };
+};
 
 module.exports = {
   getAll,
   findById,
   create,
-  // update,
-  // exclude,
+  exclude,
+  update,
 };

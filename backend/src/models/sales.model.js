@@ -37,8 +37,22 @@ const create = async (products) => { // TESTADA
 };
 
 const exclude = async (id) => {
-  await conection.execute('DELETE FROM sales WHERE id = ?', [id]);
+  const [result] = await conection.execute('DELETE FROM sales WHERE id = ?', [id]);
+  
+  if (result.affectedRows === 0) {
+    return null; // Retorna null se nenhum sale foi excluído (não encontrado)
+  }
+  
   return { message: 'Venda excluída com sucesso!' };
+};
+
+const update = async (saleId, productId, quantity) => {
+  await conection.execute(
+    'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
+    [quantity, saleId, productId],
+  );
+  
+  return { message: 'Venda atualizada com sucesso!' };
 };
 
 module.exports = {
@@ -46,4 +60,5 @@ module.exports = {
   findById,
   create,
   exclude,
+  update,
 };
