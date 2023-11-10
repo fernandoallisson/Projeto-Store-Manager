@@ -116,4 +116,30 @@ describe('Testa o controller de produtos', function () { // Concluído
     chai.expect(res.status).to.have.been.calledWith(status);
     chai.expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
+  it('Testa uma busca feita por nome', async function () { // Testa o controller de produtos
+    const req = { query: { q: 'teste' } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    sinon.stub(productsService.produtosService, 'searchProductsByName').resolves({ itens: [] });
+
+    await productsController.controleDeProdutos.searchProductsByName(req, res);
+
+    chai.expect(res.status).to.have.been.calledWith(200);
+    chai.expect(res.json).to.have.been.calledWith([]);
+  });
+  it('Testa uma busca feita por nome com o q sem nada', async function () { // Testa o controller de produtos
+    const req = { query: { q: '' } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    sinon.stub(productsService.produtosService, 'getAll').resolves({ products: [] });
+
+    await productsController.controleDeProdutos.searchProductsByName(req, res);
+
+    chai.expect(res.status).to.have.been.calledWith(200);
+    chai.expect(res.json).to.have.been.calledWith([]);
+  });
 });

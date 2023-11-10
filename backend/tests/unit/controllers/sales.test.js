@@ -72,4 +72,29 @@ describe('Testa o controller de sales', function () {
     chai.expect(res.status).to.have.been.calledWith(404);
     chai.expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
   });
+  it('Testa a função de create com status NOT_FOUND', async function () {
+    const req = { body: [{ productId: 1, quantity: 1 }] };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    sinon.stub(vendasService, 'create').resolves({ data: { message: 'Product not found' }, status: 'NOT_FOUND' });
+
+    await controleDeVendas.create(req, res);
+
+    chai.expect(res.status).to.have.been.calledWith(404);
+  });
+  it('Testa a função update', async function () {
+    const req = { params: { saleId: 1, productId: 1 }, body: { quantity: 10 } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    sinon.stub(vendasService, 'update').resolves({ dados: {}, status: 200 });
+
+    await controleDeVendas.update(req, res);
+
+    chai.expect(res.status).to.have.been.calledWith(200);
+    chai.expect(res.json).to.have.been.calledWith({});
+  });
 });
