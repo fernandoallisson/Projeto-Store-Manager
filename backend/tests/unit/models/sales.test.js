@@ -44,4 +44,16 @@ describe('Testa o model de produtos', function () {
     const expected = mockProduct[0];
     chai.expect(result[0]).to.been.equal(expected);
   });
+  it('Testa a função create', async function () {
+    const products = [
+      { productId: 1, quantity: 2 },
+      { productId: 2, quantity: 3 },
+    ];
+    const insertId = 1;
+    sinon.stub(connection, 'execute').resolves([{ insertId }]);
+    sinon.stub(sales, 'create').resolves(products);
+    const result = await sales.create(products);
+    const expected = { id: insertId, itemSold: products };
+    chai.expect(result).to.been.equal(expected.itemSold);
+  });
 });
