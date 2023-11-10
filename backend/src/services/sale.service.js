@@ -33,7 +33,7 @@ const update = async (saleId, productId, quantity) => {
   const updatedSale = await sales.findById(saleId);
   const updatedProduct = updatedSale.find((product) => product.productId === Number(productId));
   await sales.update(saleId, productId, quantity);
-  return { status: 200, dados: { saleId: Number(saleId), ...updatedProduct } };
+  return { status: 200, dados: { saleId: Number(saleId), ...updatedProduct, quantity } };
 };
 
 module.exports = {

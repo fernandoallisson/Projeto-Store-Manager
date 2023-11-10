@@ -82,4 +82,38 @@ describe('Testa o controller de produtos', function () { // Concluído
     chai.expect(res.status).to.have.been.calledWith(404);
     chai.expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
+  it('Testa /products/:id para atualizar um produto', async function () { // Testa o controller de produtos
+    const req = { params: { id: 1 }, body: { name: 'teste' } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    const status = 200;
+    sinon.stub(productsService.produtosService, 'update').resolves({ product: {
+      id: req.params.id,
+      name: req.body.name,
+    } });
+
+    await productsController.controleDeProdutos.update(req, res);
+
+    chai.expect(res.status).to.have.been.calledWith(status);
+    chai.expect(res.json).to.have.been.calledWith({
+      id: req.params.id,
+      name: req.body.name,
+    });
+  });
+  it('Testa /products/:id para atualizar um produto que não exista', async function () { // Testa o controller de produtos
+    const req = { params: { id: 1 }, body: { name: 'teste' } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    const status = 404;
+    sinon.stub(productsService.produtosService, 'update').resolves({ status: 'NOT_FOUND', message: 'Product not found' });
+
+    await productsController.controleDeProdutos.update(req, res);
+    
+    chai.expect(res.status).to.have.been.calledWith(status);
+    chai.expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+  });
 });

@@ -140,7 +140,7 @@ describe('Testes para middlewares de validação de produtos', function () { // 
   it('Não Deve chamar next() se o produto não existir', async function () {
     const req = { 
       body: [
-        { productId: 1999,
+        { productId: -1,
           quantity: 1999,
         },
       ], 

@@ -60,10 +60,6 @@ const searchProductsByName = async (req, res) => {
 
   const { itens } = await produtosService.searchProductsByName(q);
 
-  if (itens.length === 0) {
-    return res.status(200).json([]);
-  }
-
   return res.status(200).json(itens);
 };
 
