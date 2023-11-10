@@ -101,4 +101,12 @@ describe('Testa o model de produtos', function () {
     const expected = null;
     chai.expect(result).to.been.equal(expected);
   });
+  it('Testa a função update', async function () {
+    const id = 1;
+    const name = 'Produto 1';
+    sinon.stub(connection, 'execute').resolves([{ id: 1, name: 'Produto 1' }]);
+    const result = await product.update(id, name);
+    const expected = { id: 1, name: 'Produto 1' };
+    chai.expect(result).not.to.been.equal(expected);
+  });
 });
