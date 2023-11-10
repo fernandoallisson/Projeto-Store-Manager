@@ -38,7 +38,6 @@ const create = async (products) => { // TESTADA
 
 const exclude = async (id) => {
   const [result] = await conection.execute('DELETE FROM sales WHERE id = ?', [id]);
-  
   if (result.affectedRows === 0) {
     return null; // Retorna null se nenhum sale foi excluído (não encontrado)
   }

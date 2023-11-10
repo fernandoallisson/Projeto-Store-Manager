@@ -56,13 +56,6 @@ describe('Testa o model de produtos', function () {
     const expected = { id: insertId, itemSold: products };
     chai.expect(result).to.been.equal(expected.itemSold);
   });
-  it('Testa a função exclude quando affectedRos === 0', async function () {
-    const id = 1;
-    sinon.stub(connection, 'execute').resolves([{ affectedRows: 0 }]);
-    sinon.stub(sales, 'exclude').resolves(null);
-    const result = await sales.exclude(id);
-    chai.expect(result).to.been.equal(null);
-  });
   it('Testa a função create 1', async function () {
     // Dados de exemplo para o teste
     const products = [
@@ -102,5 +95,19 @@ describe('Testa o model de produtos', function () {
   
     // Restaura o stub
     executeStub.restore();
+  });
+  it('should return null when no sale is deleted (affectedRows is 0)', async function () {
+    // Configuração do ambiente de teste
+    const id = 90;
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 0 }]);
+
+    // Chama a função exclude
+    const result = await sales.exclude(id);
+
+    // Verifica se a função execute foi chamada corretamente
+    chai.expect(connection.execute).to.have.been.calledWith('DELETE FROM sales WHERE id = ?', [id]);
+
+    // Verifica se o resultado é null
+    chai.expect(result).to.be.equal(null);
   });
 });
